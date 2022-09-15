@@ -3,6 +3,7 @@
 //は成功すると 0 を返し、失敗した場合は -1 を返す
 //c言語でコードブロック内の経過時間を計算するために、gettimeofdayを使う。
 
+
 #include <sys/time.h>
 #include <stdio.h>
 
