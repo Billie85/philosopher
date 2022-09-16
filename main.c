@@ -6,26 +6,25 @@
 #include <stdlib.h>
 #include <err.h>
 
-int i = 0;
+int max = 0;
+
+//何故199999なのかをもう少し詳しく知りたい。
 void *hoge()
 {
-	//int	i;
-	
-	i++;
-/* 	while(i < 100000)
+	int	i;
+
+	i = 0;
+	while(i < 19999)//19999をを超えてしまうとrace_conditionが起こってしまう。
 	{
 		i++;
-	} */
+		max++;
+	}
 }
 
 int main(int argc ,char *argv[])
 {
 	pthread_t	philo, philo2;
-
-	//printf("argc is %d\n", argc);
-	//printf("argv is %s\n", argv[1]);
-	//while(i < 4)
-	//{
+	
 		if (pthread_create(&philo, NULL, &hoge, NULL) != 0)
 			return 1;
 		if (pthread_create(&philo2, NULL, &hoge, NULL) != 0)
@@ -34,8 +33,6 @@ int main(int argc ,char *argv[])
 			return 3;
 		if (pthread_join(philo2, NULL) != 0)
 			return 4;
-		printf("Number %d\n", i);
-		//i++;
-	//}
+		printf("Number %d\n", max);
 	return (0);
 }
