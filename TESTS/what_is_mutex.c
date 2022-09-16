@@ -20,7 +20,8 @@ void *hoge()
 	int	i;
 
 	i = 0;
-	while(i < 100000000)
+//mutexを使うことでスレッドを同時に走らせてもアクセスすることができないから、race_conditionを防ぐことができる
+	while(i < 100000000)//OK
 	{
 		pthread_mutex_lock(&mutex);
 		i++;
@@ -31,25 +32,26 @@ void *hoge()
 
 int main(int argc ,char *argv[])
 {
-	pthread_t	philo, philo2;
+	pthread_t	philo[4];
+	int			i;
 
+	i = 0;
 	pthread_mutex_init(&mutex, NULL);
-		if (pthread_create(&philo, NULL, &hoge, NULL) != 0)
+	while(i < 4)
+	{
+		if (pthread_create(&philo[i], NULL, &hoge, NULL) != 0)
 		{
+			perror("faild to create thread");
 			return 1;
 		}
-		if (pthread_create(&philo2, NULL, &hoge, NULL) != 0)
+		printf("Thread[%d]has started\n", i);
+		if (pthread_join(philo[i], NULL) != 0)
 		{
 			return 2;
 		}
-		if (pthread_join(philo, NULL) != 0)
-		{
-			return 3;
-		}
-		if (pthread_join(philo2, NULL) != 0)
-		{
-			return 4;
-		}
+		printf("Thread[%d]has finished\n", i);
+		i++;
+	}
 		pthread_mutex_destroy(&mutex);
 		printf("Number %d\n", max);
 		return (0);

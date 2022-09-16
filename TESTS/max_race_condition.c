@@ -13,7 +13,8 @@ void *hoge()
 	int	i;
 
 	i = 0;
-	while(i < 19999)//19999をを超えてしまうとrace_conditionが起こってしまう。
+//19999をを超えてしまうとrace_conditionが起こってしまう。
+	while(i < 19999)
 	{
 		i++;
 		max++;
