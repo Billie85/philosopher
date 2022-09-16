@@ -1,13 +1,14 @@
-#include <pthread.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <err.h>
+#include "philo.h"
 
 int max = 0;
 pthread_mutex_t mutex;
+
+int	check_malloc(t_arguments *args)
+{
+	if (args == NULL)
+	perror("malloc failed");
+	return (0);
+}
 
 void *hoge()
 {
@@ -25,13 +26,23 @@ void *hoge()
 
 int main(int argc ,char *argv[])
 {
+	t_arguments	*args;
 	pthread_t	philo[4];
 	int			i;
+	int			hoge;
 
 	printf("argc is %d\n", argc -1);
 	printf("argv is %s\n", argv [1]);
 
-	i = 0;
+	args = (t_arguments *)malloc(sizeof(t_arguments));
+	check_malloc(args);
+	init(args);
+	args->number_of_philosophers = ft_atoi(argv[1]);
+	printf("number_of_philosophers is [%d]\n", args->number_of_philosophers);
+	hoge = args->number_of_philosophers + 10;
+	printf("total hoge is [%d]\n", hoge);
+
+	/* i = 0;
 	pthread_mutex_init(&mutex, NULL);
 	while(i < argc -1)
 	{
@@ -49,6 +60,6 @@ int main(int argc ,char *argv[])
 		i++;
 	}
 		pthread_mutex_destroy(&mutex);
-		printf("Number %d\n", max);
+		printf("Number %d\n", max); */
 		return (0);
 }
