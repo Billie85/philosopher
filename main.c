@@ -27,9 +27,8 @@ void *hoge()
 int main(int argc ,char *argv[])
 {
 	t_arguments	*args;
-	pthread_t	philo[4];
+	pthread_t	*philo;
 	int			i;
-	int			hoge;
 
 	printf("argc is %d\n", argc -1);
 	printf("argv is %s\n", argv [1]);
@@ -38,13 +37,14 @@ int main(int argc ,char *argv[])
 	check_malloc(args);
 	init(args);
 	args->number_of_philosophers = ft_atoi(argv[1]);
+	philo = (pthread_t *)malloc(sizeof(pthread_t) * args->number_of_philosophers);
+	if (philo == NULL)
+		return (0);
 	printf("number_of_philosophers is [%d]\n", args->number_of_philosophers);
-	hoge = args->number_of_philosophers + 10;
-	printf("total hoge is [%d]\n", hoge);
 
-	/* i = 0;
+	i = 0;
 	pthread_mutex_init(&mutex, NULL);
-	while(i < argc -1)
+	while(i < args->number_of_philosophers)
 	{
 		if (pthread_create(&philo[i], NULL, &hoge, NULL) != 0)
 		{
@@ -60,6 +60,6 @@ int main(int argc ,char *argv[])
 		i++;
 	}
 		pthread_mutex_destroy(&mutex);
-		printf("Number %d\n", max); */
+		printf("Total Number %d\n", max);
 		return (0);
 }
