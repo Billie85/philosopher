@@ -10,16 +10,18 @@ int	check_malloc(t_arguments *args)
 	return (0);
 }
 
-void *hoge()
+//ここでphilo達が食事を始めるプログラムを書く。
+void *start_philo(void *data)
 {
 	int	i;
+	t_arguments *args;
+	args = (t_arguments *)data;
 
 	i = 0;
-	while(i < 10)
+	while(i < args->number_of_philosophers)
 	{
 		pthread_mutex_lock(&mutex);
 		i++;
-		max++;
 		pthread_mutex_unlock(&mutex);
 	}
 }
@@ -46,17 +48,23 @@ int main(int argc ,char *argv[])
 	pthread_mutex_init(&mutex, NULL);
 	while(i < args->number_of_philosophers)
 	{
-		if (pthread_create(&philo[i], NULL, &hoge, NULL) != 0)
+		printf("Thread[%d]has started\n", i);
+		if (pthread_create(&philo[i], NULL, &start_philo, NULL) != 0)
 		{
 			perror("Faild to create thread");
 			return 1;
 		}
-		printf("Thread[%d]has started\n", i);
+		i++;
+	}
+
+	i = 0;
+	while(i < args->number_of_philosophers)
+	{
+		printf("Thread[%d]has finished\n", i);
 		if (pthread_join(philo[i], NULL) != 0)
 		{
 			return 2;
 		}
-		printf("Thread[%d]has finished\n", i);
 		i++;
 	}
 		pthread_mutex_destroy(&mutex);
