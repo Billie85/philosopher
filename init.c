@@ -1,10 +1,10 @@
 #include "philo.h"
 
-void	init(t_arguments *args)
+void	init(t_info *args)
 {
-
 	args->number_of_philosophers = 0;
-	args->time_to_die = 0;
-	args->time_to_eat = 0;
-	args->time_to_sleep = 0;
+	args->time2die = 0;
+	args->time2eat = 0;
+	args->time2sleep = 0;
+	args->flag = 0;
 }

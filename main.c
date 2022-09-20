@@ -3,71 +3,66 @@
 int max = 0;
 pthread_mutex_t mutex;
 
-int	check_malloc(t_arguments *args)
+void *philosopher(void *data)
 {
-	if (args == NULL)
-	perror("malloc failed");
-	return (0);
-}
-
-//ここでphilo達が食事を始めるプログラムを書く。
-void *start_philo(void *data)
-{
-	int	i;
-	t_arguments *args;
-	args = (t_arguments *)data;
-
-	i = 0;
-	while(i < args->number_of_philosophers)
+	t_info *args;
+	t_philo *philo_data;
+	philo_data = (t_philo *)data;
+	args = philo_data->two_way;
+	while(1)
 	{
-		pthread_mutex_lock(&mutex);
-		i++;
-		pthread_mutex_unlock(&mutex);
+		if (args->flag == 1)
+		{
+			//think
+			//take_fork(L)
+			//take_fork(R)
+			//eat
+			//put_fork(R)
+			//put_fork(L)
+			break;
+		}
 	}
 }
 
 int main(int argc ,char *argv[])
 {
-	t_arguments	*args;
-	pthread_t	*philo;
+	pthread_mutex_t	mutex;
+	t_info		t_args;
 	int			i;
 
-	printf("argc is %d\n", argc -1);
-	printf("argv is %s\n", argv [1]);
+	init(&t_args);
+	t_args.number_of_philosophers = ft_atoi(argv[1]);
+	//t_args.time2die = ft_atoi(argv[2]);
+	//t_args.time2eat = ft_atoi(argv[3]);
+	//t_args.time2sleep = ft_atoi(argv[4]);
 
-	args = (t_arguments *)malloc(sizeof(t_arguments));
-	check_malloc(args);
-	init(args);
-	args->number_of_philosophers = ft_atoi(argv[1]);
-	philo = (pthread_t *)malloc(sizeof(pthread_t) * args->number_of_philosophers);
-	if (philo == NULL)
-		return (0);
-	printf("number_of_philosophers is [%d]\n", args->number_of_philosophers);
-
-	i = 0;
 	pthread_mutex_init(&mutex, NULL);
-	while(i < args->number_of_philosophers)
+	i = 0;
+	while(i < t_args.number_of_philosophers)
 	{
+		t_args.next[i].philo_id = i;
+		t_args.next[i].two_way = &t_args;
 		printf("Thread[%d]has started\n", i);
-		if (pthread_create(&philo[i], NULL, &start_philo, NULL) != 0)
+		if (pthread_create(&t_args.next[i].philo_thread, NULL, &philosopher, &t_args.next[i]) != 0)
 		{
 			perror("Faild to create thread");
 			return 1;
 		}
 		i++;
 	}
+	t_args.flag = 1;
+	printf("finish make pthread");
 
 	i = 0;
-	while(i < args->number_of_philosophers)
+	while(i < t_args.number_of_philosophers)
 	{
 		printf("Thread[%d]has finished\n", i);
-		if (pthread_join(philo[i], NULL) != 0)
+		if (pthread_join(t_args.next[i].philo_thread, NULL) != 0)
 		{
 			return 2;
 		}
 		i++;
 	}
 		pthread_mutex_destroy(&mutex);
-		printf("Total Number %d\n", max);
 		return (0);
 }

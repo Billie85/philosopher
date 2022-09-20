@@ -4,6 +4,7 @@
 		"wait.h": "c",
 		"libft.h": "c",
 		"stdlib.h": "c",
-		"philo.h": "c"
+		"philo.h": "c",
+		"pthread.h": "c"
 	}
 }
