@@ -10,14 +10,12 @@
 //int gettimeofday(struct timeval *tv, struct timezone *tz);
 int main (void)
 {
-	struct timeval start;
+	struct timeval time;
 	struct timeval end;
 	int	i;
 
-	gettimeofday(&start, NULL);
-	i = 0;
-	while(i < NULL)
-	{
-		i++;
-	}
-	printf("%d\n", gettimeofday(&end, NULL));
+	gettimeofday(&time, NULL);
+	printf("tv_sec is [%ld]\n", time.tv_sec);
+	printf("tv_usec is [%ld]\n", time.tv_usec);
+	return 0;
+}
