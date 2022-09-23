@@ -5,9 +5,9 @@ pthread_mutex_t mutex;
 
 void	put_down(t_philo *philo_data)
 {
-	printf("Philosopher %d will put down her chopsticks\n", philo_data->two_way->number_of_philosophers);
-	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + 1) % philo_data->philo_id]);
-	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + philo_data->philo_id) % philo_data->philo_id]);
+	printf("Philosopher %d will put down her chopsticks\n", philo_data->philo_id);
+	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers]);
+	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + philo_data->philo_id) % philo_data->two_way->number_of_philosophers]);
 }
 
 void	eat(t_philo *philo_data)
@@ -20,10 +20,10 @@ void	eat(t_philo *philo_data)
 
 void	pick_up_fork(t_philo *philo_data)
 {
-	philo_data->right_fork = (philo_data->two_way->number_of_philosophers + 1) % philo_data->philo_id;
-	philo_data->left_fork = (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->philo_id;
+	//入ってきたphiloのidが基数か偶数かによってforkの順番や配置すべてが変わってくる。
+	philo_data->right_fork = (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
+	philo_data->left_fork = (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
 
-	//入ってきたphiloのidが基数か偶数かによって処理が変わってくる。
 	if (philo_data->philo_id & 1)//奇数だったら。1,3,5,
 	{
 		printf("Philosopher %d is waiting to pick up right fork %d\n", philo_data->philo_id, philo_data->right_fork);

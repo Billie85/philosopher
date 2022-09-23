@@ -8,7 +8,6 @@
 #include <sys/time.h>
 #include <stdint.h>
 #include "./libft/libft.h"
-#include "./useful/debug.h"
 
 typedef struct s_info t_info;
 
