@@ -8,6 +8,7 @@
 #include <sys/time.h>
 #include <stdint.h>
 #include "./libft/libft.h"
+#include "./useful/debug.h"
 
 typedef struct s_info t_info;
 
@@ -22,7 +23,6 @@ typedef struct s_philo
 
 typedef struct s_info
 {
-	unsigned long long time;
 	int		number_of_philosophers;
 	int		time2die;
 	int		time2eat;
@@ -30,7 +30,6 @@ typedef struct s_info
 	int 	flag;
 	pthread_mutex_t fork[200];
 	t_philo	next[200];
-
 } t_info;
 
 void	init(t_info *args);

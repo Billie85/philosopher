@@ -3,35 +3,43 @@
 int max = 0;
 pthread_mutex_t mutex;
 
+void	put_down(t_philo *philo_data)
+{
+	printf("Philosopher %d will put down her chopsticks\n", philo_data->two_way->number_of_philosophers);
+	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + 1) % philo_data->philo_id]);
+	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + philo_data->philo_id) % philo_data->philo_id]);
+}
+
+void	eat(t_philo *philo_data)
+{
+	int	eat_time;
+	eat_time = rand() % 3 + 1;
+	printf("Philosopher %d will eat for %d seconds\n", philo_data->two_way->number_of_philosophers, eat_time);
+	sleep(eat_time);
+}
+
 void	pick_up_fork(t_philo *philo_data)
 {
-	t_info	*fork_info;
-	philo_data->right_fork = (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
-	philo_data->left_fork = (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
-
-	printf("----------fork pair---------\n");
-	printf("left fork is  [%d]\n",  philo_data->left_fork);
-	printf("right fork is [%d]\n", philo_data->right_fork);
+	philo_data->right_fork = (philo_data->two_way->number_of_philosophers + 1) % philo_data->philo_id;
+	philo_data->left_fork = (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->philo_id;
 
 	//入ってきたphiloのidが基数か偶数かによって処理が変わってくる。
-	if (philo_data->philo_id & 1)//基数だったら。
+	if (philo_data->philo_id & 1)//奇数だったら。1,3,5,
 	{
 		printf("Philosopher %d is waiting to pick up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-		//pthread_mutex_lock(&fork_info->fork[philo_data->left_fork]);
+		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->right_fork]);
 		printf("Philosopher %d picked up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-
 		printf("Philosopher %d is waiting to pick up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-		//pthread_mutex_lock(&fork_info->fork[philo_data->right_fork]);
+		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->left_fork]);
 		printf("Philosopher %d picked up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
 	}
 	else//偶数だったら
 	{
 		printf("Philosopher %d is waiting to pick up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-		//pthread_mutex_lock(&fork_info->fork[philo_data->right_fork]);
+		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->left_fork]);
 		printf("Philosopher %d picked up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-
 		printf("Philosopher %d is waiting to pick up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-		//pthread_mutex_lock(&fork_info->fork[philo_data->right_fork]);
+		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->right_fork]);
 		printf("Philosopher %d picked up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
 	}
 }
@@ -41,10 +49,7 @@ void	thinking(t_philo *philo_data)
 	int sleeptime;
 
 	sleeptime = rand() % 3 + 1;//gettime();
-	pthread_mutex_lock(&mutex);
-	printf("Philosopher %d will think for %d seconds\n", philo_data->philo_id, sleeptime);
 	sleep(sleeptime);
-	pthread_mutex_unlock(&mutex);
 }
 
 void *philosopher(void *data)
@@ -62,13 +67,9 @@ void *philosopher(void *data)
 			printf("id is %d\n", philo_data->philo_id);
 			thinking(philo_data);
 			pick_up_fork(philo_data);
-			//lock(mutex)
-			//take_fork(L)
-			//take_fork(R)
-			//eat
-			//put_fork(R)
-			//put_fork(L)
-			//unloc(mutex)
+			eat(philo_data);
+			put_down(philo_data);
+
 			break;
 		}
 	}
@@ -79,37 +80,34 @@ int main(int argc ,char *argv[])
 {
 	struct timeval	philo_time;
 	pthread_mutex_t	mutex;
-	t_info		t_args;
+	t_info		args;
 	int			i;
 
-	init(&t_args);
-	t_args.number_of_philosophers = ft_atoi(argv[1]);
-	/* printf("argv 2 [%d]\n",t_args.time2die = ft_atoi(argv[2]));
-	printf("argv 3 [%d]\n",t_args.time2eat = ft_atoi(argv[3]));
-	printf("argv 4 [%d]\n",t_args.time2sleep = ft_atoi(argv[4])); */
+	init(&args);
+	args.number_of_philosophers = ft_atoi(argv[1]);
 
-	pthread_mutex_init(&mutex, NULL);
 	i = 0;
-	while(i < t_args.number_of_philosophers)
+	while(i < args.number_of_philosophers)
 	{
-		t_args.next[i].philo_id = i;
-		t_args.next[i].two_way = &t_args;
+		pthread_mutex_init(&mutex, NULL);
+		args.next[i].philo_id = i + 1;
+		args.next[i].two_way = &args;
 		printf("Thread[%d]has started\n", i);
-		if (pthread_create(&t_args.next[i].thread, NULL, &philosopher, &t_args.next[i]) != 0)
+		if (pthread_create(&args.next[i].thread, NULL, &philosopher, &args.next[i]) != 0)
 		{
 			perror("Faild to create thread");
 			return 1;
 		}
 		i++;
 	}
-	t_args.flag = 1;
+	args.flag = 1;
 	printf("----------finish make pthread----------\n");
 
 	i = 0;
-	while(i < t_args.number_of_philosophers)
+	while(i < args.number_of_philosophers)
 	{
 		//printf("Thread[%d]has finished\n", i);
-		if (pthread_join(t_args.next[i].thread, NULL) != 0)
+		if (pthread_join(args.next[i].thread, NULL) != 0)
 		{
 			return 2;
 		}

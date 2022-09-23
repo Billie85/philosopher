@@ -5,6 +5,7 @@
 		"libft.h": "c",
 		"stdlib.h": "c",
 		"philo.h": "c",
-		"pthread.h": "c"
+		"pthread.h": "c",
+		"debug.h": "c"
 	}
 }
