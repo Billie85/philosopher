@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../philo.h"
 
 void	put_down(t_philo *philo_data)
 {

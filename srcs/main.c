@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../philo.h"
 
 void *philosopher(void *data)
 {
@@ -17,8 +17,6 @@ void *philosopher(void *data)
 			pick_up_fork(philo_data);
 			eat(philo_data);
 			put_down(philo_data);
-
-			break;
 		}
 	}
 }
@@ -32,6 +30,7 @@ int main(int argc ,char *argv[])
 
 	init(&args);
 	args.number_of_philosophers = ft_atoi(argv[1]);
+	
 
 	i = 0;
 	while(i < args.number_of_philosophers)

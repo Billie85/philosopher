@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../philo.h"
 
 void	init(t_info *args)
 {
