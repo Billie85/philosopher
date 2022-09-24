@@ -1,57 +1,5 @@
 #include "philo.h"
 
-int max = 0;
-pthread_mutex_t mutex;
-
-void	put_down(t_philo *philo_data)
-{
-	printf("Philosopher %d will put down her chopsticks\n", philo_data->philo_id);
-	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers]);
-	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + philo_data->philo_id) % philo_data->two_way->number_of_philosophers]);
-}
-
-void	eat(t_philo *philo_data)
-{
-	int	eat_time;
-	eat_time = rand() % 3 + 1;
-	printf("Philosopher %d will eat for %d seconds\n", philo_data->two_way->number_of_philosophers, eat_time);
-	sleep(eat_time);
-}
-
-void	pick_up_fork(t_philo *philo_data)
-{
-	//入ってきたphiloのidが基数か偶数かによってforkの順番や配置すべてが変わってくる。
-	philo_data->right_fork = (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
-	philo_data->left_fork = (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
-
-	if (philo_data->philo_id & 1)//奇数だったら。1,3,5,
-	{
-		printf("Philosopher %d is waiting to pick up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->right_fork]);
-		printf("Philosopher %d picked up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-		printf("Philosopher %d is waiting to pick up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->left_fork]);
-		printf("Philosopher %d picked up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-	}
-	else//偶数だったら
-	{
-		printf("Philosopher %d is waiting to pick up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->left_fork]);
-		printf("Philosopher %d picked up left fork %d\n", philo_data->philo_id, philo_data->left_fork);
-		printf("Philosopher %d is waiting to pick up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-		pthread_mutex_lock(&philo_data->two_way->fork[philo_data->right_fork]);
-		printf("Philosopher %d picked up right fork %d\n", philo_data->philo_id, philo_data->right_fork);
-	}
-}
-
-void	thinking(t_philo *philo_data)
-{
-	int sleeptime;
-
-	sleeptime = rand() % 3 + 1;//gettime();
-	sleep(sleeptime);
-}
-
 void *philosopher(void *data)
 {
 	t_info *args;
@@ -65,7 +13,7 @@ void *philosopher(void *data)
 		{
 			//args->next->philo_dataにはidは入ってない
 			printf("id is %d\n", philo_data->philo_id);
-			thinking(philo_data);
+			think(philo_data);
 			pick_up_fork(philo_data);
 			eat(philo_data);
 			put_down(philo_data);
@@ -73,7 +21,6 @@ void *philosopher(void *data)
 			break;
 		}
 	}
-	
 }
 
 int main(int argc ,char *argv[])
