@@ -8,7 +8,7 @@ void	init(t_info *args)
 	args->time2die = 0;
 	args->time2eat = 0;
 	args->time2sleep = 0;
-	args->flag = 0;
+	args->everyone_ate = 0;
 
 	i = 0;
 	while(i < args->number_of_philosophers)
