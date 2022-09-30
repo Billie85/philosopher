@@ -4,6 +4,6 @@ void	think(t_philo *philo_data)
 {
 	int sleeptime;
 
-	sleeptime = rand() % 3 + 1;//gettime();
+	sleeptime = philo_data->two_way->time2sleep;
 	sleep(sleeptime);
 }

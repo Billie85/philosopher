@@ -7,14 +7,19 @@ void *philosopher(void *data)
 	philo_data = (t_philo *)data;
 	args = philo_data->two_way;
 
-	// == 0
-	while(!(args->is_dead))
+//1
+	while(1)
 	{
-			//args->next->philo_dataにはidは入ってない
-			printf("id is %d\n", philo_data->philo_id);
-			think(philo_data);
-			pick_up_fork(philo_data);
-			eat(philo_data);
-			put_down(philo_data);
+		//think(philo_data);
+		eating(philo_data);
+		//eat(philo_data);
+		put_down(philo_data);
+		philo_data->time_last_meal = get_time();//ここで最後の食事を記録してあげる。
+		check_dead(args, philo_data);
+		if(args->is_dead == 1)
+		{
+			printf("Philo %ld is dead %ld\n",philo_data->philo_id , args->is_dead);
+			break;
+		}
 	}
 }

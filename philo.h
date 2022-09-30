@@ -18,9 +18,9 @@ typedef struct s_philo
 {
 	time_t			start_time;
 	time_t			time_last_meal;
-	int				right_fork;
-	int				left_fork;
-	int				philo_id;
+	size_t				right_fork;
+	size_t				left_fork;
+	size_t				philo_id;
 	pthread_t		thread;
 	pthread_t		t_monitor;
 	t_info			*two_way;//双方向
@@ -28,18 +28,21 @@ typedef struct s_philo
 
 typedef struct s_info
 {
-	int		is_dead;
+	size_t		flag;
+	size_t		is_dead;
 	pthread_mutex_t	mutex;
-	int		number_of_philosophers;
-	int		time2die;
-	int		time2eat;
-	int		time2sleep;
-	int 	everyone_ate;
+	size_t		number_of_philosophers;
+	size_t		time2die;
+	size_t		time2eat;
+	size_t		time2sleep;
+	size_t 	everyone_ate;
 	pthread_mutex_t fork[200];
 	t_philo	philo_next[200];
 } t_info;
 
 void	init(t_info *args);
+void	eating(t_philo *philo_data);
+void	check_dead(t_info *args, t_philo *philo_data);
 void *philosopher(void *data);
 void	think(t_philo *philo_data);
 void	pick_up_fork(t_philo *philo_data);
