@@ -35,11 +35,14 @@ typedef struct s_info
 	size_t		time2die;
 	size_t		time2eat;
 	size_t		time2sleep;
-	size_t 	everyone_ate;
+	size_t		number_of_time_2_eat;
 	pthread_mutex_t fork[200];
 	t_philo	philo_next[200];
 } t_info;
 
+
+void 	check_args(int argc, char *argv[], t_info *args);
+int create_pthread(char *argv[], t_info *args);
 void	init(t_info *args);
 void	eating(t_philo *philo_data);
 void	check_dead(t_info *args, t_philo *philo_data);
@@ -47,5 +50,6 @@ void *philosopher(void *data);
 void	think(t_philo *philo_data);
 void	pick_up_fork(t_philo *philo_data);
 void	eat(t_philo *philo_data);
-void	put_down(t_philo *philo_data);
+void	finish_eating(t_philo *philo_data);
 long	get_time(void);
+void ft_sleep(t_philo *philo_data);
