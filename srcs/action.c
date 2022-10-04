@@ -1,6 +1,5 @@
 #include "../philo.h"
 
-//thinkもusleep必要なのかが理解できない。
 void	think(t_philo *philo_data)
 {
 	printf("Philosopher %ld is thinking\n", philo_data->philo_id);
@@ -33,7 +32,6 @@ void	check_dead(t_info *args, t_philo *philo_data)
 		pthread_mutex_unlock(&args->mutex);
 }
 
-//ミリ秒にする必要がある。
 long	get_time(void)
 {
 	struct timeval m_time;
