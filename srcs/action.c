@@ -1,5 +1,6 @@
 #include "../philo.h"
 
+//thinkもusleep必要なのかが理解できない。
 void	think(t_philo *philo_data)
 {
 	printf("Philosopher %ld is thinking\n", philo_data->philo_id);
@@ -7,12 +8,8 @@ void	think(t_philo *philo_data)
 
 void ft_sleep(t_philo *philo_data)
 {
-	int time;
-
 	printf("Philosopher %ld is sleeping\n", philo_data->philo_id);
-	time = get_time();
-	usleep(philo_data->two_way->time2sleep * 1000 - 14000);
-	//while((get_time() - time) < philo_data->two_way->time2sleep);
+	usleep(philo_data->two_way->time2sleep * 1000);
 }
 
 void	check_dead(t_info *args, t_philo *philo_data)
@@ -21,11 +18,19 @@ void	check_dead(t_info *args, t_philo *philo_data)
 
 	i = 0;
 	pthread_mutex_lock(&args->mutex);
-	//printf("get time ->[%ld]\n", get_time() - args->philo_next->time_last_meal);
-	//printf("time last meal ->[%ld]\n", philo_data->time_last_meal);
+	printf("\n");
+	printf("in the fucking function dead!!!!!!!!!!!\n");
+	printf("get time ->[%ld]\n", get_time() - philo_data->time_last_meal);
+	printf("args->time2die ->[%ld]\n", args->time2die);
+	printf("\n");
 	if (get_time() - philo_data->time_last_meal > args->time2die)
 		args->is_dead = 1;
-	pthread_mutex_unlock(&args->mutex);
+		if(args->is_dead == 1)
+		{
+			printf("Philo %ld is DEAD\n",philo_data->philo_id);
+		}
+		else
+		pthread_mutex_unlock(&args->mutex);
 }
 
 //ミリ秒にする必要がある。

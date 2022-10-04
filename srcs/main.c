@@ -26,6 +26,7 @@ void	init(t_info *args)
 int create_pthread(char *argv[], t_info *args)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while(i < args->number_of_philosophers)
