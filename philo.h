@@ -17,7 +17,6 @@ typedef struct s_info t_info;
 typedef struct s_philo
 {
 	time_t			start_time;
-	time_t			time_last_meal;
 	size_t				right_fork;
 	size_t				left_fork;
 	size_t				philo_id;

@@ -7,22 +7,31 @@ void	think(t_philo *philo_data)
 
 void ft_sleep(t_philo *philo_data)
 {
+	long start_sleep_time;
+
+	start_sleep_time = philo_data->start_time;
 	printf("Philosopher %ld is sleeping\n", philo_data->philo_id);
-	usleep(philo_data->two_way->time2sleep * 1000);
+  while (1)
+  {
+    if (get_time() - start_sleep_time >= philo_data->two_way->time2sleep)
+      break ;
+    usleep(300);
+  }
 }
 
 void	check_dead(t_info *args, t_philo *philo_data)
 {
 	int i;
+	long time_last_meal;
+
+	 time_last_meal = philo_data->start_time;
 
 	i = 0;
 	pthread_mutex_lock(&args->mutex);
-	printf("\n");
-	printf("in the fucking function dead!!!!!!!!!!!\n");
-	printf("get time ->[%ld]\n", get_time() - philo_data->time_last_meal);
-	printf("args->time2die ->[%ld]\n", args->time2die);
-	printf("\n");
-	if (get_time() - philo_data->time_last_meal > args->time2die)
+	//printf("the time now is [%ld]\n", get_time ());
+	//printf("last time meal-----[%ld]-----\n", philo_data->start_time);
+	//printf("calculation the time and last time meal -----[%ld]------\n", get_time() - philo_data->start_time);
+	if (get_time() - philo_data->start_time > args->time2die)
 		args->is_dead = 1;
 		if(args->is_dead == 1)
 		{
