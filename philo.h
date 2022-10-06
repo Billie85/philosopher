@@ -16,6 +16,7 @@ typedef struct s_info t_info;
 
 typedef struct s_philo
 {
+	time_t			get_time_start;
 	time_t			start_time;
 	size_t				right_fork;
 	size_t				left_fork;

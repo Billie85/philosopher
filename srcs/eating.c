@@ -10,7 +10,9 @@ void	eating(t_philo *philo_data)
 {
 	long start_time_eating;
 
-	start_time_eating = philo_data->start_time;
+	//start_time_eating = philo_data->get_time_start;
+	start_time_eating = get_time();
+	//printf("start_time_eating is ---[%ld]---\n", start_time_eating);
 	philo_data->right_fork = RIGHT_FORK;
 	philo_data->left_fork = LEFT_FORK;
 
@@ -25,7 +27,7 @@ void	eating(t_philo *philo_data)
 		{
 			if (get_time() - start_time_eating >= philo_data->two_way->time2eat)
 			break;
-			usleep(300);
+			//usleep(300);
 		}
 	}
 	else//偶数だったら
@@ -38,7 +40,7 @@ void	eating(t_philo *philo_data)
 		{
 			if (get_time() - start_time_eating >= philo_data->two_way->time2eat)
 			break;
-			usleep(300);
+			//usleep(300);
 		}
 	}
 }

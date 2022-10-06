@@ -34,7 +34,7 @@ int create_pthread(char *argv[], t_info *args)
 		pthread_mutex_init(&args->mutex, NULL);
 		args->philo_next[i].philo_id = i + 1;
 		args->philo_next[i].two_way = args;
-		args->philo_next[i].start_time = get_time();
+		args->philo_next[i].get_time_start = get_time();
 
 		if (pthread_create(&args->philo_next[i].thread, NULL, &philosopher, &args->philo_next[i]) != 0)
 		{
