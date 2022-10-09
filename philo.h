@@ -16,28 +16,29 @@ typedef struct s_info t_info;
 
 typedef struct s_philo
 {
+	time_t			time_finish_eat;
 	time_t			get_time_start;
 	time_t			start_time;
-	size_t				right_fork;
-	size_t				left_fork;
-	size_t				philo_id;
-	pthread_t		thread;
-	pthread_t		t_monitor;
+	size_t			right_fork;
+	size_t			left_fork;
+	size_t			philo_id;
 	t_info			*two_way;//双方向
+	pthread_t		thread;
 } t_philo;
 
 typedef struct s_info
 {
-	size_t		flag;
+	long		time_dead;
 	size_t		is_dead;
-	pthread_mutex_t	mutex;
 	size_t		number_of_philosophers;
 	size_t		time2die;
 	size_t		time2eat;
 	size_t		time2sleep;
 	size_t		number_of_time_2_eat;
+	pthread_mutex_t	mutex;
+	pthread_mutex_t dead_mutex;
 	pthread_mutex_t fork[200];
-	t_philo	philo_next[200];
+	t_philo	philo[200];
 } t_info;
 
 
@@ -53,3 +54,5 @@ void	eat(t_philo *philo_data);
 void	finish_eating(t_philo *philo_data);
 long	get_time(void);
 void ft_sleep(t_philo *philo_data);
+void    precise_sleep(size_t sleep_time);
+void *doctor(void *data);

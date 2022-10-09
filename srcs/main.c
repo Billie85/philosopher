@@ -20,33 +20,49 @@ void	init(t_info *args)
 	args->time2die = 0;
 	args->time2eat = 0;
 	args->time2sleep = 0;
-	args->flag = 0;
 }
+
+
 
 int create_pthread(char *argv[], t_info *args)
 {
 	int i;
 	int j;
+	pthread_t dead_thread;
+
 
 	i = 0;
 	while(i < args->number_of_philosophers)
 	{
 		pthread_mutex_init(&args->mutex, NULL);
-		args->philo_next[i].philo_id = i + 1;
-		args->philo_next[i].two_way = args;
-		args->philo_next[i].get_time_start = get_time();
+		args->philo[i].philo_id = i + 1;
+		args->philo[i].two_way = args;
+		args->philo[i].get_time_start = get_time();
+		args->philo[i].time_finish_eat = get_time();//最初に今の時刻にしてその後に最後に食事をした時間に更新していく。
 
-		if (pthread_create(&args->philo_next[i].thread, NULL, &philosopher, &args->philo_next[i]) != 0)
+		if (pthread_create(&args->philo[i].thread, NULL, &philosopher, &args->philo[i]) != 0)
 		{
 			perror("Faild to create thread");
 			return 1;
 		}
 		i++;
 	}
+	//pthread_mutex_init(&args->dead_mutex, NULL);
+	if (pthread_create(&dead_thread, NULL, &doctor, &args) != 0)
+	{
+		perror("Faild to create thread");
+		return 1;
+	}
+	i = 0;
+	if (pthread_join(dead_thread, NULL) != 0)
+	{
+			return 2;
+	}
+
 	i = 0;
 	while(i < args->number_of_philosophers)
 	{
-		if (pthread_join(args->philo_next[i].thread, NULL) != 0)
+		if (pthread_join(args->philo[i].thread, NULL) != 0)
 		{
 			return 2;
 		}
