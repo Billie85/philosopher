@@ -22,8 +22,6 @@ void	init(t_info *args)
 	args->time2sleep = 0;
 }
 
-
-
 int create_pthread(char *argv[], t_info *args)
 {
 	int i;
@@ -47,8 +45,8 @@ int create_pthread(char *argv[], t_info *args)
 		}
 		i++;
 	}
-	//pthread_mutex_init(&args->dead_mutex, NULL);
-	if (pthread_create(&dead_thread, NULL, &doctor, &args) != 0)
+	//pthread_mutex_init(&args->dead_mutex, NULL); //ここのコメントアウトを外すとdoctor関数でセグフォします。
+/* 	if (pthread_create(&dead_thread, NULL, &doctor, &args) != 0)
 	{
 		perror("Faild to create thread");
 		return 1;
@@ -57,7 +55,7 @@ int create_pthread(char *argv[], t_info *args)
 	if (pthread_join(dead_thread, NULL) != 0)
 	{
 			return 2;
-	}
+	} */
 
 	i = 0;
 	while(i < args->number_of_philosophers)

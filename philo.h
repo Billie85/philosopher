@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <err.h>
 #include <stdint.h>
-#include "./libft/libft.h"
 
 #define LEFT_FORK (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
 #define RIGHT_FORK (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
@@ -56,3 +55,4 @@ long	get_time(void);
 void ft_sleep(t_philo *philo_data);
 void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
+int	ft_atoi(const char *str);

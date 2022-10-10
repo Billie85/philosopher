@@ -1,7 +1,7 @@
 #include "../philo.h"
 
 void *doctor(void *data)
-{
+ {
 	int		i;
 	t_info *args;
 	t_philo *philo_data;
