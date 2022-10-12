@@ -35,9 +35,9 @@ typedef struct s_info
 	size_t		time2sleep;
 	size_t		number_of_time_2_eat;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t dead_mutex;
-	pthread_mutex_t fork[200];
-	t_philo	philo[200];
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	*fork;
+	t_philo	*philo;
 } t_info;
 
 

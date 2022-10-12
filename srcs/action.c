@@ -5,6 +5,8 @@ void	think(t_philo *philo_data)
 	long start_time_thinking;
 	long time_sleep_now;
 
+	if (philo_data->two_way->is_dead == 1)
+		return ;
 	pthread_mutex_lock(&philo_data->two_way->mutex);
 	start_time_thinking = get_time() - philo_data->get_time_start;
 	printf("%ld %ld is thinking\n",start_time_thinking ,philo_data->philo_id);
@@ -16,6 +18,8 @@ void ft_sleep(t_philo *philo_data)
 	long print_time_sleep;
 	long time_sleep_now;
 
+	if (philo_data->two_way->is_dead == 1)
+		return ;
 	time_sleep_now = get_time();
 	print_time_sleep = get_time() - philo_data->get_time_start;//出力するための時間
 	printf("%ld %ld is sleeping\n", print_time_sleep , philo_data->philo_id);
@@ -27,7 +31,7 @@ void ft_sleep(t_philo *philo_data)
   }
 }
 
-void	check_dead(t_info *args, t_philo *philo_data)
+/* void	check_dead(t_info *args, t_philo *philo_data)
 {
 	int i;
 
@@ -41,7 +45,7 @@ void	check_dead(t_info *args, t_philo *philo_data)
 		printf("%ld %ld is DEAD\n", philo_data->two_way->time_dead ,philo_data->philo_id);
 	}
 	pthread_mutex_unlock(&args->mutex);
-}
+} */
 
 long	get_time(void)
 {

@@ -2,8 +2,9 @@
 
 void	finish_eating(t_philo *philo_data)
 {
+	if (philo_data->two_way->is_dead == 1)
+		return ;
 	philo_data->time_finish_eat = get_time() - philo_data->get_time_start;
-	printf("time_finish_eat %ld\n", philo_data->time_finish_eat);
 	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers]);
 	pthread_mutex_unlock(&philo_data->two_way->fork[(philo_data->two_way->number_of_philosophers + philo_data->philo_id) % philo_data->two_way->number_of_philosophers]);
 }
@@ -13,6 +14,8 @@ void	eating(t_philo *philo_data)
 	long print_eat_time;
 	long time_eating_now;
 
+	if (philo_data->two_way->is_dead == 1)
+		return ;
 	philo_data->right_fork = RIGHT_FORK;
 	philo_data->left_fork = LEFT_FORK;
 

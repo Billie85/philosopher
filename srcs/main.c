@@ -1,9 +1,22 @@
 #include "../philo.h"
 
+void	allocate_memory(t_info *args)
+{
+	args->fork = malloc(sizeof(pthread_mutex_t) * (args->number_of_philosophers));
+	if (args->fork == NULL)
+		printf("Faild malloc\n");
+	args->philo = malloc(sizeof(t_philo) * (args->number_of_philosophers));
+	if (args->philo == NULL)
+	{
+		free(args->fork);
+		printf("Faild malloc\n");
+	}
+}
+
 void 	check_args(int argc, char *argv[], t_info *args)
 {
 	if (argv[5])
-		args->number_of_time_2_eat = ft_atoi(argv[5]);
+		args->number_of_time_2_eat = ft_atoi(argv[5]);//5
 	else
 		args->number_of_time_2_eat = 0;
 	args->number_of_philosophers = ft_atoi(argv[1]);
@@ -24,13 +37,12 @@ void	init(t_info *args)
 
 int create_pthread(char *argv[], t_info *args)
 {
-	int i;
-	int j;
+	size_t i;
 	pthread_t dead_thread;
 
-
 	i = 0;
-	while(i < args->number_of_philosophers)
+
+	while(i < args->number_of_philosophers)//5
 	{
 		pthread_mutex_init(&args->mutex, NULL);
 		args->philo[i].philo_id = i + 1;
@@ -45,8 +57,8 @@ int create_pthread(char *argv[], t_info *args)
 		}
 		i++;
 	}
-	//pthread_mutex_init(&args->dead_mutex, NULL); //ここのコメントアウトを外すとdoctor関数でセグフォします。
-/* 	if (pthread_create(&dead_thread, NULL, &doctor, &args) != 0)
+	//pthread_createの第4引数がアドレス(&args)が渡されている状況だったから上手く構造体が渡されてなかった。
+	if (pthread_create(&dead_thread, NULL, &doctor, args) != 0)
 	{
 		perror("Faild to create thread");
 		return 1;
@@ -55,7 +67,7 @@ int create_pthread(char *argv[], t_info *args)
 	if (pthread_join(dead_thread, NULL) != 0)
 	{
 			return 2;
-	} */
+	}
 
 	i = 0;
 	while(i < args->number_of_philosophers)
@@ -76,6 +88,7 @@ int main(int argc ,char *argv[])
 
 	init(&args);
 	check_args(argc, argv, &args);
+	allocate_memory(&args);
 	create_pthread(argv, &args);
 }
 //10ms変ってくる

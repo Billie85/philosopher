@@ -2,34 +2,32 @@
 
 void *doctor(void *data)
  {
+	size_t	dead_time_now;
+	size_t	print_time_dead;
 	int		i;
 	t_info *args;
 	t_philo *philo_data;
-	long	time_now;
-	philo_data = (t_philo *)data;
-	args = philo_data->two_way;
 
-	printf("%ld %ld\n", args->time2die, time_now - args->philo[i].time_finish_eat);
+	args = (t_info*)data;
+
 	while(1)
 	{
 		i = 0;
-		time_now = get_time();
-		pthread_mutex_lock(&args->mutex);
-		 while(i < philo_data->two_way->number_of_philosophers)//5
+		 while(i < args->number_of_philosophers)
 		 {
-			printf("[%ld\n]",args->philo[i].time_finish_eat);
-		 	printf("%d\n", i);
-		 	fflush(stdout);
-		 	if (time_now - args->philo[i].time_finish_eat > args->time2die)
+			dead_time_now = get_time();
+			print_time_dead = get_time() - args->philo[i].get_time_start;
+		 	if (dead_time_now - args->philo[i].time_finish_eat > args->time2die)
 		 	{
-		 		printf("aaaaaaaa\n");
-				//printf("//// [%ld\n]",args->philo[i].time_finish_eat);
-				//rgs->is_dead = 1;//ここで死んだことを教える。
-				//printf("%ld %ld is DEAD\n", philo_data->two_way->time_dead ,philo_data->philo_id);
-				//return(NULL);
+				if (args->is_dead == 1)
+					exit(1);
+				pthread_mutex_lock(&args->mutex);
+				printf("%ld %ld is dead\n", print_time_dead , args->philo[i].philo_id);
+				pthread_mutex_unlock(&args->mutex);
+				args->is_dead = 1;
+				exit (1);
 			}
 			i++;
 		}
 	}
-	//pthread_mutex_unlock(&args->mutex);
-}
+ }
