@@ -19,13 +19,13 @@ void *doctor(void *data)
 			print_time_dead = get_time() - args->philo[i].start_time;
 		 	if (dead_time_now - args->philo[i].finish_eat_time > args->time2die)
 		 	{
-				if (args->is_dead == 1)
+				if (args->is_dead != 0)
 					exit(1);
 				pthread_mutex_lock(&args->mutex);
 				printf("%ld %ld is dead\n", print_time_dead , args->philo[i].philo_id);
-				pthread_mutex_unlock(&args->mutex);
 				args->is_dead = 1;
-				exit (1);
+					exit(1);
+				pthread_mutex_unlock(&args->mutex);
 			}
 			i++;
 		}

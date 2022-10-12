@@ -55,7 +55,7 @@ int create_pthread(char *argv[], t_info *args)
 		i++;
 	}
 	//pthread_createの第4引数がアドレス(&args)が渡されている状況だったから上手く構造体が渡されてなかった。
-	if (pthread_create(&dead_thread, NULL, &doctor, args) != 0)
+	 if (pthread_create(&dead_thread, NULL, &doctor, args) != 0)
 		error_message("Faild to create thread");
 	i = 0;
 	if (pthread_join(dead_thread, NULL) != 0)

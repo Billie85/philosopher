@@ -13,6 +13,5 @@ void *philosopher(void *data)
 		finish_eating(philo_data);
 		ft_sleep(philo_data);
 		think(philo_data);
-		//check_dead(args, philo_data);
 	}
 }
