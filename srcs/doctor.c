@@ -16,8 +16,8 @@ void *doctor(void *data)
 		 while(i < args->number_of_philosophers)
 		 {
 			dead_time_now = get_time();
-			print_time_dead = get_time() - args->philo[i].get_time_start;
-		 	if (dead_time_now - args->philo[i].time_finish_eat > args->time2die)
+			print_time_dead = get_time() - args->philo[i].start_time;
+		 	if (dead_time_now - args->philo[i].finish_eat_time > args->time2die)
 		 	{
 				if (args->is_dead == 1)
 					exit(1);

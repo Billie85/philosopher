@@ -15,8 +15,7 @@ typedef struct s_info t_info;
 
 typedef struct s_philo
 {
-	time_t			time_finish_eat;
-	time_t			get_time_start;
+	time_t			finish_eat_time;
 	time_t			start_time;
 	size_t			right_fork;
 	size_t			left_fork;
@@ -56,3 +55,4 @@ void ft_sleep(t_philo *philo_data);
 void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
+void error_message(const char *s);

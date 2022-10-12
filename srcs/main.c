@@ -16,7 +16,7 @@ void	allocate_memory(t_info *args)
 void 	check_args(int argc, char *argv[], t_info *args)
 {
 	if (argv[5])
-		args->number_of_time_2_eat = ft_atoi(argv[5]);//5
+		args->number_of_time_2_eat = ft_atoi(argv[5]);
 	else
 		args->number_of_time_2_eat = 0;
 	args->number_of_philosophers = ft_atoi(argv[1]);
@@ -47,39 +47,29 @@ int create_pthread(char *argv[], t_info *args)
 		pthread_mutex_init(&args->mutex, NULL);
 		args->philo[i].philo_id = i + 1;
 		args->philo[i].two_way = args;
-		args->philo[i].get_time_start = get_time();
-		args->philo[i].time_finish_eat = get_time();//最初に今の時刻にしてその後に最後に食事をした時間に更新していく。
+		args->philo[i].start_time = get_time();
+		args->philo[i].finish_eat_time = get_time();//最初に今の時刻にしてその後に最後に食事をした時間に更新していく。
 
 		if (pthread_create(&args->philo[i].thread, NULL, &philosopher, &args->philo[i]) != 0)
-		{
-			perror("Faild to create thread");
-			return 1;
-		}
+			error_message("Faild to create thread");
 		i++;
 	}
 	//pthread_createの第4引数がアドレス(&args)が渡されている状況だったから上手く構造体が渡されてなかった。
 	if (pthread_create(&dead_thread, NULL, &doctor, args) != 0)
-	{
-		perror("Faild to create thread");
-		return 1;
-	}
+		error_message("Faild to create thread");
 	i = 0;
 	if (pthread_join(dead_thread, NULL) != 0)
-	{
-			return 2;
-	}
+		error_message("Faild pthread_join");
 
 	i = 0;
 	while(i < args->number_of_philosophers)
 	{
 		if (pthread_join(args->philo[i].thread, NULL) != 0)
-		{
-			return 2;
-		}
+			error_message("Faild pthread_join");
 		i++;
 	}
-		pthread_mutex_destroy(&args->mutex);
-		return (0);
+		if (pthread_mutex_destroy(&args->mutex) != 0)
+			error_message("Faild pthread_mutex_destroy");
 }
 
 int main(int argc ,char *argv[])
@@ -91,5 +81,3 @@ int main(int argc ,char *argv[])
 	allocate_memory(&args);
 	create_pthread(argv, &args);
 }
-//10ms変ってくる
-//msについて調べる
