@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <err.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define LEFT_FORK (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
 #define RIGHT_FORK (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
@@ -40,18 +41,19 @@ typedef struct s_info
 } t_info;
 
 
+bool	taking_fork(t_philo *philo_data);
 void 	check_args(int argc, char *argv[], t_info *args);
 int create_pthread(char *argv[], t_info *args);
 void	init(t_info *args);
-void	eating(t_philo *philo_data);
+bool	eating(t_philo *philo_data);
 void	check_dead(t_info *args, t_philo *philo_data);
 void *philosopher(void *data);
-void	think(t_philo *philo_data);
+bool	think(t_philo *philo_data);
 void	pick_up_fork(t_philo *philo_data);
-void	eat(t_philo *philo_data);
-void	finish_eating(t_philo *philo_data);
+bool	eat(t_philo *philo_data);
+bool	finish_eating(t_philo *philo_data);
 long	get_time(void);
-void ft_sleep(t_philo *philo_data);
+bool ft_sleep(t_philo *philo_data);
 void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
