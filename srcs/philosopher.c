@@ -15,10 +15,6 @@ void *philosopher(void *data)
 		usleep(philo_data->two_way->time2eat * 1000);
 	while(1)
 	{
-		/* pthread_mutex_lock(&args->mutex);
-		if (args->is_dead == false);
-			break;
-		pthread_mutex_unlock(&args->mutex); */
 		taking_fork(philo_data);
 		eating(philo_data);
 		ft_sleep(philo_data);
