@@ -10,6 +10,7 @@
 *.pch
 *.lib
 *.a
+*a.out
 *.la
 *.lo
 *.dll
