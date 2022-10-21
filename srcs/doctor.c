@@ -22,5 +22,3 @@ void *doctor(void *data)
 	}
 	pthread_mutex_unlock(&philo->two_way->mutex);
 }
-//pthread_detachを使てるから、whileを２重で回す必要がない。
-//whileを無限ルール一つだけで出来る。

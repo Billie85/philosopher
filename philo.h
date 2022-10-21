@@ -9,8 +9,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LEFT_FORK (philo_data->philo_id -1);
-#define RIGHT_FORK (philo_data->philo_id);
+#define LEFT_FORK (philo->philo_id -1);
+#define RIGHT_FORK (philo->philo_id);
+#define BACK        "\033[0m"
+#define RED			"\033[0;31m"
+#define YELLOW		"\033[1;33m]" 
+#define ORANGE		"\033[0;33m"
+#define GREEN		"\033[0;32m"
+#define CLAN		"\033[0;36m"
+#define PURPLE		"\033[1;35m"
+
 
 typedef struct s_info t_info;
 
@@ -22,7 +30,7 @@ typedef struct s_philo
 	size_t			right_fork;
 	size_t			left_fork;
 	size_t			philo_id;
-	t_info			*two_way;//双方向
+	t_info			*two_way;
 	pthread_t		thread;
 } t_philo;
 

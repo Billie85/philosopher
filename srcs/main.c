@@ -42,8 +42,7 @@ int create_pthread(char *argv[], t_info *args)
 	pthread_t dead_thread;
 
 	i = 0;
-
-	while(i < args->number_of_philosophers)//5
+	while(i < args->number_of_philosophers)
 	{
 		pthread_mutex_init(&args->mutex, NULL);
 		pthread_mutex_init(&args->print_mutex, NULL);
@@ -51,7 +50,7 @@ int create_pthread(char *argv[], t_info *args)
 		args->philo[i].philo_id = i + 1;
 		args->philo[i].two_way = args;
 		args->philo[i].start_time = get_time();
-		args->philo[i].finish_eat_time = get_time();//最初に今の時刻にしてその後に最後に食事をした時間に更新していく。
+		args->philo[i].finish_eat_time = get_time();
 
 		if (pthread_create(&args->philo[i].thread, NULL, &philosopher, &args->philo[i]) != 0)
 			error_message("Faildd to create thread");
