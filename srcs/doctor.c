@@ -1,33 +1,26 @@
 #include "../philo.h"
 
 void *doctor(void *data)
- {
-	size_t	dead_time_now;
-	size_t	print_time_dead;
-	int		i;
-	t_info *args;
-	t_philo *philo_data;
+{
+	t_philo *philo;
+	long	print_dead_time;
 
-	args = (t_info*)data;
-
+	philo = data;
+	print_dead_time = get_time() - philo->start_time;
 	while(1)
 	{
-		i = 0;
-		 while(i < args->number_of_philosophers)
-		 {
-			dead_time_now = get_time();
-			print_time_dead = get_time() - args->philo[i].start_time;
-		 	if (dead_time_now - args->philo[i].finish_eat_time > args->time2die)
-		 	{
-				if (args->is_dead)
-					return(NULL);
-				pthread_mutex_lock(&args->mutex);
-				printf("%ld %ld is dead\n", print_time_dead , args->philo[i].philo_id);
-				pthread_mutex_unlock(&args->mutex);
-				args->is_dead = 1;
-					return(NULL);
-			}
-			i++;
+		pthread_mutex_lock(&philo->two_way->mutex);
+		if (philo->two_way->is_dead == false)
+			break;
+		if (get_time() - philo->finish_eat_time >= philo->two_way->time2die)
+		{
+			print_func(philo, "DEAD", print_dead_time);
+			break;
 		}
+		pthread_mutex_unlock(&philo->two_way->mutex);
+		usleep(1000);
 	}
- }
+	pthread_mutex_unlock(&philo->two_way->mutex);
+}
+//pthread_detachを使てるから、whileを２重で回す必要がない。
+//whileを無限ルール一つだけで出来る。

@@ -9,13 +9,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define LEFT_FORK (philo_data->philo_id + philo_data->two_way->number_of_philosophers) % philo_data->two_way->number_of_philosophers;
-#define RIGHT_FORK (philo_data->philo_id + 1) % philo_data->two_way->number_of_philosophers;
+#define LEFT_FORK (philo_data->philo_id -1);
+#define RIGHT_FORK (philo_data->philo_id);
 
 typedef struct s_info t_info;
 
 typedef struct s_philo
 {
+	size_t			count_eat;
 	time_t			finish_eat_time;
 	time_t			start_time;
 	size_t			right_fork;
@@ -27,16 +28,15 @@ typedef struct s_philo
 
 typedef struct s_info
 {
-	long		time_dead;
-	size_t		is_dead;
+	bool		is_dead;
 	size_t		number_of_philosophers;
 	size_t		time2die;
 	size_t		time2eat;
 	size_t		time2sleep;
 	size_t		number_of_time_2_eat;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	print_mutex;
 	t_philo	*philo;
 } t_info;
 
@@ -58,3 +58,6 @@ void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
 void error_message(const char *s);
+int	print_func(t_philo *philo, char *s, long start_time);
+int	my_strcmp(char *s, char *s1);
+void	check_time_eat(t_philo *philo_data);
