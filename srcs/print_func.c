@@ -28,12 +28,12 @@ int	print_func(t_philo *philo, char *s, long start_time)
 		}
 		else if (my_strcmp(s, think) == 0)
 		{
-			printf("%ld %ld is thinking\n", start_time ,philo->philo_id);
+			printf("%ld %ld is thinking\n"BACK, start_time ,philo->philo_id);
 		}
 		else if(my_strcmp(s, eat) == 0)
 		{
 			printf(RED"%ld %ld is eating\n"BACK,start_time ,philo->philo_id);
-			//check_time_eat(philo);
+			check_time_eat(philo);
 		}
 		else if (my_strcmp(s, dead) == 0)
 		{

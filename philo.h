@@ -11,7 +11,7 @@
 
 #define LEFT_FORK (philo->philo_id -1);
 #define RIGHT_FORK (philo->philo_id);
-#define BACK        "\033[0m"
+#define BACK       	"\x1b[0m"
 #define RED			"\033[0;31m"
 #define YELLOW		"\033[1;33m]" 
 #define ORANGE		"\033[0;33m"
@@ -19,12 +19,12 @@
 #define CLAN		"\033[0;36m"
 #define PURPLE		"\033[1;35m"
 
-
 typedef struct s_info t_info;
 
 typedef struct s_philo
 {
 	size_t			count_eat;
+	size_t			total_eat;
 	time_t			finish_eat_time;
 	time_t			start_time;
 	size_t			right_fork;
@@ -48,7 +48,6 @@ typedef struct s_info
 	t_philo	*philo;
 } t_info;
 
-
 bool	taking_fork(t_philo *philo_data);
 void 	check_args(int argc, char *argv[], t_info *args);
 int create_pthread(char *argv[], t_info *args);
@@ -65,7 +64,8 @@ bool ft_sleep(t_philo *philo_data);
 void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
-void error_message(const char *s);
+void	destroy_pthread(t_info *args);
 int	print_func(t_philo *philo, char *s, long start_time);
 int	my_strcmp(char *s, char *s1);
 void	check_time_eat(t_philo *philo_data);
+void	join(t_info *args);

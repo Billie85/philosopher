@@ -3,10 +3,14 @@
 void	check_time_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->two_way->mutex);
+
+	philo->finish_eat_time = get_time();
 	philo->count_eat++;
+
 	if (philo->count_eat == philo->two_way->number_of_time_2_eat)
 	{
-		philo->two_way->is_dead = false;
+		if (philo->philo_id == philo->two_way->number_of_philosophers -1)
+			philo->two_way->is_dead = false;
 	}
 	pthread_mutex_unlock(&philo->two_way->mutex);
 }

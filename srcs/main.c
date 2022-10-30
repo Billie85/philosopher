@@ -27,8 +27,6 @@ void 	check_args(int argc, char *argv[], t_info *args)
 
 void	init(t_info *args)
 {
-	int	i;
-
 	args->number_of_philosophers = 0;
 	args->time2die = 0;
 	args->time2eat = 0;
@@ -51,29 +49,14 @@ int create_pthread(char *argv[], t_info *args)
 		args->philo[i].two_way = args;
 		args->philo[i].start_time = get_time();
 		args->philo[i].finish_eat_time = get_time();
+		args->philo[i].count_eat = 0;
 
-		if (pthread_create(&args->philo[i].thread, NULL, &philosopher, &args->philo[i]) != 0)
-			error_message("Faildd to create thread");
+		if (pthread_create(&args->philo[i].thread, NULL, philosopher, &args->philo[i]) != 0)
+			printf("Faildd to create thread\n");
 		i++;
 	}
-
-	i = 0;
-	while(i < args->number_of_philosophers)
-	{
-		if (pthread_join(args->philo[i++].thread, NULL) != 0)
-			error_message("Faild pthread_join");
-	}
-
-	i = 0;
-	while(i < args->number_of_philosophers)
-	{
-		if (pthread_mutex_destroy(&args->fork[i++]) != 0)
-			error_message("Faild pthread_mutex_destroy");
-		else if (pthread_mutex_destroy(&args->mutex) != 0)
-			error_message("Faild pthread_mutex_destroy");
-		else if(pthread_mutex_destroy(&args->print_mutex) != 0)
-			error_message("Faild pthread_mutex_destroy");
-	}
+	join(args);
+	destroy_pthread(args);
 }
 
 int main(int argc ,char *argv[])
