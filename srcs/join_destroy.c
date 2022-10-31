@@ -21,9 +21,9 @@ void	destroy_pthread(t_info *args)
 	{
 		if (pthread_mutex_destroy(&args->fork[i++]) != 0)
 			printf("Faild pthread_mutex_destroy\n");
-		else if (pthread_mutex_destroy(&args->mutex) != 0)
-			printf("Faild pthread_mutex_destroy\n");
-		else if(pthread_mutex_destroy(&args->print_mutex) != 0)
-			printf("Faild pthread_mutex_destroy\n");
 	}
+		if (pthread_mutex_destroy(&args->mutex) != 0)
+			printf("aaaFaild pthread_mutex_destroy\n");
+		if (pthread_mutex_destroy(&args->print_mutex) != 0)
+			printf("zzzFaild pthread_mutex_destroy\n");
 }

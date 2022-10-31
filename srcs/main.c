@@ -40,10 +40,10 @@ int create_pthread(char *argv[], t_info *args)
 	pthread_t dead_thread;
 
 	i = 0;
+	pthread_mutex_init(&args->mutex, NULL);
+	pthread_mutex_init(&args->print_mutex, NULL);
 	while(i < args->number_of_philosophers)
 	{
-		pthread_mutex_init(&args->mutex, NULL);
-		pthread_mutex_init(&args->print_mutex, NULL);
 		pthread_mutex_init(&args->fork[i], NULL);
 		args->philo[i].philo_id = i + 1;
 		args->philo[i].two_way = args;
