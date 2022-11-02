@@ -26,4 +26,6 @@ void	destroy_pthread(t_info *args)
 			printf("aaaFaild pthread_mutex_destroy\n");
 		if (pthread_mutex_destroy(&args->print_mutex) != 0)
 			printf("zzzFaild pthread_mutex_destroy\n");
+		/* free(args->fork);
+		free(args->philo); */
 }

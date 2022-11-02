@@ -26,7 +26,7 @@ typedef struct s_philo
 	size_t			count_eat;
 	size_t			total_eat;
 	time_t			finish_eat_time;
-	time_t			start_time;
+	size_t			start_time;
 	size_t			right_fork;
 	size_t			left_fork;
 	size_t			philo_id;
@@ -65,7 +65,7 @@ void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
 void	destroy_pthread(t_info *args);
-int	print_func(t_philo *philo, char *s, long start_time);
+int	print_func(t_philo *philo, char *s);
 int	my_strcmp(char *s, char *s1);
 void	check_time_eat(t_philo *philo_data);
 void	join(t_info *args);

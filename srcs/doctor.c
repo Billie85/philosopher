@@ -3,10 +3,9 @@
 void *doctor(void *data)
 {
 	t_philo *philo;
-	long	print_dead_time;
 
 	philo = data;
-	print_dead_time = get_time() - philo->start_time;
+
 	while(1)
 	{
 		pthread_mutex_lock(&philo->two_way->mutex);
@@ -14,10 +13,11 @@ void *doctor(void *data)
 			break ;
 		if (get_time() - philo->finish_eat_time >= philo->two_way->time2die)
 		{
-			print_func(philo, "DEAD", print_dead_time);
+			print_func(philo, "DEAD");
 			break ;
 		}
 		pthread_mutex_unlock(&philo->two_way->mutex);
 	}
+	
 	pthread_mutex_unlock(&philo->two_way->mutex);
 }

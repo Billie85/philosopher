@@ -2,7 +2,7 @@
 
 void	check_time_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->two_way->mutex);
+	
 
 	philo->finish_eat_time = get_time();
 	philo->count_eat++;
@@ -12,25 +12,17 @@ void	check_time_eat(t_philo *philo)
 		if (philo->philo_id == philo->two_way->number_of_philosophers -1)
 			philo->two_way->is_dead = false;
 	}
-	pthread_mutex_unlock(&philo->two_way->mutex);
 }
 
 bool	think(t_philo *philo_data)
 {
-	long start_time_thinking;
-	long time_sleep_now;
-
-	start_time_thinking = get_time() - philo_data->start_time;
-	print_func(philo_data, "THINK", start_time_thinking);
+	print_func(philo_data, "THINK");
 }
 
 bool ft_sleep(t_philo *philo_data)
 {
-	long print_time_sleep;
-	long time_sleep_now;
-
-	print_time_sleep = get_time() - philo_data->start_time;
-	print_func(philo_data, "SLEEP", print_time_sleep);
+	//print_time_sleep = get_time() - philo_data->start_time;
+	print_func(philo_data, "SLEEP");
 	precise_sleep(philo_data->two_way->time2sleep);
 }
 
