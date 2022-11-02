@@ -18,6 +18,7 @@
 #define GREEN		"\033[0;32m"
 #define CLAN		"\033[0;36m"
 #define PURPLE		"\033[1;35m"
+#define ONE_PHILO 1
 
 typedef struct s_info t_info;
 
