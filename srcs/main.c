@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/06 03:11:07 by root              #+#    #+#             */
+/*   Updated: 2022/11/06 03:12:28 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 void	allocate_memory(t_info *args)
@@ -13,7 +25,7 @@ void	allocate_memory(t_info *args)
 	}
 }
 
-void 	check_args(int argc, char *argv[], t_info *args)
+void	check_args(char *argv[], t_info *args)
 {
 	if (argv[5])
 		args->number_of_time_2_eat = ft_atoi(argv[5]);
@@ -31,20 +43,19 @@ void	init(t_info *args)
 	args->time2die = 0;
 	args->time2eat = 0;
 	args->time2sleep = 0;
-	args->is_dead = true;
+	args->is_dead = NOT_DIE;
 }
 
-int create_pthread(char *argv[], t_info *args)
+int	create_pthread(t_info *args)
 {
-	long time;
-	size_t i;
-	pthread_t dead_thread;
+	long		time;
+	size_t		i;
 
 	i = 0;
 	time = get_time();
 	pthread_mutex_init(&args->mutex, NULL);
 	pthread_mutex_init(&args->print_mutex, NULL);
-	while(i < args->number_of_philosophers)
+	while (i < args->number_of_philosophers)
 	{
 		pthread_mutex_init(&args->fork[i], NULL);
 		args->philo[i].philo_id = i + 1;
@@ -52,30 +63,32 @@ int create_pthread(char *argv[], t_info *args)
 		args->philo[i].start_time = time;
 		args->philo[i].finish_eat_time = get_time();
 		args->philo[i].count_eat = 0;
-
-		if (pthread_create(&args->philo[i].thread, NULL, philosopher, &args->philo[i]) != 0)
+		if (pthread_create(&args->philo[i].thread, NULL, \
+					philosopher, &args->philo[i]) != 0)
 			printf("Faildd to create thread\n");
 		i++;
 	}
 	join(args);
 	destroy_pthread(args);
+	return (0);
 }
 
-int main(int argc ,char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_info		args;
-	long		time_start_1_philo;
+	t_info	args;
 
-
-	time_start_1_philo = get_time();
+	if (argc != 5 && argc != 6)
+	{
+		printf(PURPLE"--------------try again------------\n"
+				"[1]:number_of_philosophers\n" \
+				"[2]:time_to_die\n" \
+				"[3]:time_to_eat_time\n" \
+				"[4]:time_to_sleep\n" \
+				"[5]:number_of_each_philosophers_must_eat\n"BACK);
+		return (0);
+	}
 	init(&args);
-	check_args(argc, argv, &args);
+	check_args(argv, &args);
 	allocate_memory(&args);
-	if (args.number_of_philosophers == ONE_PHILO)
-		{
-			printf(RED"%ld 1 has taken a fork\n"BACK, get_time() - time_start_1_philo);
-			printf(PURPLE"%ld 1 is dead\n"BACK, get_time() - time_start_1_philo);
-			return(0);
-		}
-	create_pthread(argv, &args);
+	create_pthread(&args);
 }
