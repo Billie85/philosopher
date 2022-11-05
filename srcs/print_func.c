@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:28 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 03:41:11 by root             ###   ########.fr       */
+/*   Updated: 2022/11/06 06:22:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int	another_action(char *s, t_philo *philo, size_t time_now)
 		printf(ORANGE"%ld %ld take a fork [right %ld] \n"BACK, time_now, \
 			philo->philo_id, philo->right_fork);
 	else if (my_strcmp(s, think) == 0)
+	{
 		printf("%ld %ld is thinking\n"BACK, time_now, philo->philo_id);
-		else (another_action2(s, philo, time_now));
+	}
+		another_action2(s, philo, time_now);
 	return (0);
 }
 
@@ -64,8 +66,10 @@ int	print_func(t_philo *philo, char *s)
 	if (philo->two_way->is_dead == NOT_DIE)
 	{
 		if (my_strcmp(s, sleep) == 0)
+		{
 			printf(CLAN"%ld %ld is sleeping\n"BACK, time_now, philo->philo_id);
-		else (another_action(s, philo, time_now));
+		}
+			another_action(s, philo, time_now);
 	}
 	pthread_mutex_unlock(&philo->two_way->print_mutex);
 	return (0);
