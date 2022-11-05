@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <err.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 #define LEFT_FORK (philo->philo_id -1);
 #define RIGHT_FORK (philo->philo_id);
@@ -19,6 +18,8 @@
 #define CLAN		"\033[0;36m"
 #define PURPLE		"\033[1;35m"
 #define ONE_PHILO 1
+#define DIE 0
+#define NOT_DIE 1
 
 typedef struct s_info t_info;
 
@@ -37,7 +38,7 @@ typedef struct s_philo
 
 typedef struct s_info
 {
-	bool		is_dead;
+	int		is_dead;
 	size_t		number_of_philosophers;
 	size_t		time2die;
 	size_t		time2eat;
@@ -49,19 +50,19 @@ typedef struct s_info
 	t_philo	*philo;
 } t_info;
 
-bool	taking_fork(t_philo *philo_data);
-void 	check_args(int argc, char *argv[], t_info *args);
-int create_pthread(char *argv[], t_info *args);
+int	taking_fork(t_philo *philo_data);
+void 	check_args(char *argv[], t_info *args);
+int create_pthread(t_info *args);
 void	init(t_info *args);
-bool	eating(t_philo *philo_data);
+int	eating(t_philo *philo_data);
 void	check_dead(t_info *args, t_philo *philo_data);
 void *philosopher(void *data);
-bool	think(t_philo *philo_data);
+int	think(t_philo *philo_data);
 void	pick_up_fork(t_philo *philo_data);
-bool	eat(t_philo *philo_data);
-bool	finish_eating(t_philo *philo_data);
-long	get_time(void);
-bool ft_sleep(t_philo *philo_data);
+int	eat(t_philo *philo_data);
+int	finish_eating(t_philo *philo_data);
+size_t	get_time(void);
+int ft_sleep(t_philo *philo_data);
 void    precise_sleep(size_t sleep_time);
 void *doctor(void *data);
 int	ft_atoi(const char *str);
