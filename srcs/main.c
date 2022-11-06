@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:07 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 03:12:28 by root             ###   ########.fr       */
+/*   Updated: 2022/11/06 10:00:56 by kayumi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	allocate_memory(t_info *args)
 {
-	args->fork = malloc(sizeof(pthread_mutex_t) * (args->number_of_philosophers));
+	args->fork = malloc(sizeof(pthread_mutex_t) * \
+			(args->number_of_philosophers));
 	if (args->fork == NULL)
 		printf("Faild malloc\n");
 	args->philo = malloc(sizeof(t_philo) * (args->number_of_philosophers));
@@ -80,7 +81,7 @@ int	main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 	{
 		printf(PURPLE"--------------try again------------\n"
-				"[1]:number_of_philosophers\n" \
+			"[1]:number_of_philosophers\n" \
 				"[2]:time_to_die\n" \
 				"[3]:time_to_eat_time\n" \
 				"[4]:time_to_sleep\n" \

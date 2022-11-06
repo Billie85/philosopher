@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:28 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 06:22:25 by root             ###   ########.fr       */
+/*   Updated: 2022/11/06 10:00:05 by kayumi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int	another_action(char *s, t_philo *philo, size_t time_now)
 	think = "THINK";
 	if (my_strcmp(s, take_l_fork) == 0)
 		printf(ORANGE"%ld %ld take a fork [left %ld] \n"BACK, time_now, \
-			philo->philo_id, philo->left_fork);
+				philo->philo_id, philo->left_fork);
 	else if (my_strcmp(s, take_r_fork) == 0)
 		printf(ORANGE"%ld %ld take a fork [right %ld] \n"BACK, time_now, \
-			philo->philo_id, philo->right_fork);
+				philo->philo_id, philo->right_fork);
 	else if (my_strcmp(s, think) == 0)
 	{
 		printf("%ld %ld is thinking\n"BACK, time_now, philo->philo_id);
 	}
-		another_action2(s, philo, time_now);
+	another_action2(s, philo, time_now);
 	return (0);
 }
 
@@ -69,7 +69,7 @@ int	print_func(t_philo *philo, char *s)
 		{
 			printf(CLAN"%ld %ld is sleeping\n"BACK, time_now, philo->philo_id);
 		}
-			another_action(s, philo, time_now);
+		another_action(s, philo, time_now);
 	}
 	pthread_mutex_unlock(&philo->two_way->print_mutex);
 	return (0);
