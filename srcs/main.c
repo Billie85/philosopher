@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:07 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 10:00:56 by kayumi           ###   ########.fr       */
+/*   Updated: 2022/11/07 06:28:20 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,6 @@ int	main(int argc, char *argv[])
 	check_args(argv, &args);
 	allocate_memory(&args);
 	create_pthread(&args);
+	free(args.philo);
+	free(args.fork);
 }

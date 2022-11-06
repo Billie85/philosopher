@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:28 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 10:00:05 by kayumi           ###   ########.fr       */
+/*   Updated: 2022/11/07 06:25:54 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	another_action(char *s, t_philo *philo, size_t time_now)
 	take_r_fork = "TAKE_RIGHT_FORK";
 	think = "THINK";
 	if (my_strcmp(s, take_l_fork) == 0)
-		printf(ORANGE"%ld %ld take a fork [left %ld] \n"BACK, time_now, \
-				philo->philo_id, philo->left_fork);
+		printf(ORANGE"%ld %ld take a fork \n"BACK, time_now, \
+				philo->philo_id);
 	else if (my_strcmp(s, take_r_fork) == 0)
-		printf(ORANGE"%ld %ld take a fork [right %ld] \n"BACK, time_now, \
-				philo->philo_id, philo->right_fork);
+		printf(ORANGE"%ld %ld take a fork \n"BACK, time_now, \
+				philo->philo_id);
 	else if (my_strcmp(s, think) == 0)
 	{
 		printf("%ld %ld is thinking\n"BACK, time_now, philo->philo_id);
