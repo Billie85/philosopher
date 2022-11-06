@@ -10,8 +10,6 @@
 # include <err.h>
 # include <stdint.h>
 
-# define LEFT_FORK(philo->philo_id -1);
-# define RIGHT_FORK(philo->philo_id);
 # define BACK       	"\x1b[0m"
 # define RED			"\033[0;31m"
 # define YELLOW		"\033[1;33m]" 

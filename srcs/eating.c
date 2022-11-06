@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:10:48 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 10:01:52 by kayumi           ###   ########.fr       */
+/*   Updated: 2022/11/07 06:15:48 by kayumi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	eating(t_philo *philo)
 
 int	taking_fork(t_philo *philo)
 {
-	philo->right_fork = RIGHT_FORK;
-	philo->left_fork = LEFT_FORK;
+	philo->right_fork = philo->philo_id;
+	philo->left_fork = philo->philo_id -1;
 	if (philo->right_fork == philo->two_way->number_of_philosophers)
 		philo->right_fork = 0;
 	if (philo->two_way->number_of_philosophers == ONE_PHILO)
