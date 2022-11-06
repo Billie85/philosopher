@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:20 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 03:11:21 by root             ###   ########.fr       */
+/*   Updated: 2022/11/06 09:46:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*philosopher(void *data)
 	philo = data;
 	monitor_detach(philo);
 	if (philo->philo_id % 2 == 0)
-		usleep(philo->two_way->time2eat * 1000);
+		precise_sleep(philo->two_way->time2sleep);
 	while (1)
 	{
 		if (philo->two_way->is_dead == DIE)

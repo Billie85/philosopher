@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:10:48 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 03:14:25 by root             ###   ########.fr       */
+/*   Updated: 2022/11/06 09:46:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	eating(t_philo *philo)
 {
 	print_func(philo, "EATING");
-	precise_sleep(philo->two_way->time2sleep);
+	precise_sleep(philo->two_way->time2eat);
 	pthread_mutex_unlock(&philo->two_way->fork[philo->left_fork]);
 	pthread_mutex_unlock(&philo->two_way->fork[philo->right_fork]);
 	return (0);
