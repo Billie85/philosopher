@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:28 by root              #+#    #+#             */
-/*   Updated: 2022/11/07 06:25:54 by root             ###   ########.fr       */
+/*   Updated: 2022/11/09 22:55:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	another_action2(char *s, t_philo *philo, size_t time_now)
 	}
 	else if (my_strcmp(s, dead) == 0)
 	{
-		printf(GREEN"%ld %ld is dead\n"BACK, time_now, philo->philo_id);
+		printf(GREEN"%ld %ld is died\n"BACK, time_now, philo->philo_id);
 		philo->two_way->is_dead = DIE;
 	}
 	return (0);
@@ -42,10 +42,10 @@ int	another_action(char *s, t_philo *philo, size_t time_now)
 	take_r_fork = "TAKE_RIGHT_FORK";
 	think = "THINK";
 	if (my_strcmp(s, take_l_fork) == 0)
-		printf(ORANGE"%ld %ld take a fork \n"BACK, time_now, \
+		printf(ORANGE"%ld %ld has taken a fork \n"BACK, time_now, \
 				philo->philo_id);
 	else if (my_strcmp(s, take_r_fork) == 0)
-		printf(ORANGE"%ld %ld take a fork \n"BACK, time_now, \
+		printf(ORANGE"%ld %ld has taken a fork \n"BACK, time_now, \
 				philo->philo_id);
 	else if (my_strcmp(s, think) == 0)
 	{
