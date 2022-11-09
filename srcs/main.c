@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:11:07 by root              #+#    #+#             */
-/*   Updated: 2022/11/09 10:58:46 by root             ###   ########.fr       */
+/*   Updated: 2022/11/09 23:08:06 by kayumi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	create_pthread(t_info *args)
 		args->philo[i].two_way = args;
 		args->philo[i].start_time = time;
 		args->philo[i].finish_eat_time = get_time();
-		
 		args->philo[i].count_eat = 0;
 		if (pthread_create(&args->philo[i].thread, NULL, \
 					philosopher, &args->philo[i]) != 0)
