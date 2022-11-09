@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 03:10:39 by root              #+#    #+#             */
-/*   Updated: 2022/11/06 10:01:37 by kayumi           ###   ########.fr       */
+/*   Updated: 2022/11/09 13:06:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	check_time_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->two_way->mutex);
 	philo->finish_eat_time = get_time();
+	pthread_mutex_unlock(&philo->two_way->mutex);
 	philo->count_eat++;
 	if (philo->count_eat == philo->two_way->number_of_time_2_eat)
 	{
